@@ -39,6 +39,9 @@ class Pokemon
     #[ORM\ManyToMany(targetEntity: Type::class, inversedBy: 'type')]
     private Collection $type;
 
+    #[ORM\Column(unique: true)]
+    private ?int $pokemonId = null;
+
     public function __construct()
     {
         $this->type = new ArrayCollection();
@@ -136,6 +139,18 @@ class Pokemon
     public function removeType(Type $type): static
     {
         $this->type->removeElement($type);
+
+        return $this;
+    }
+
+    public function getPokemonId(): ?int
+    {
+        return $this->pokemonId;
+    }
+
+    public function setPokemonId(int $pokemonId): static
+    {
+        $this->pokemonId = $pokemonId;
 
         return $this;
     }
