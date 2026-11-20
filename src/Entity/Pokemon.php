@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PokemonRepository::class)]
 #[ApiResource(
@@ -24,18 +25,23 @@ class Pokemon
 
     #[ORM\Column(length: 255)]
     #[Groups(['pokemon:lire', 'pokemon:ecrire'])]
+    #[Assert\NotBlank]
+    #[Assert\Length(255)]
     private ?string $name = null;
 
     #[ORM\Column(nullable: true)]
     #[Groups(['pokemon:lire', 'pokemon:ecrire'])]
+    #[Assert\Positive]
     private ?int $height = null;
 
     #[ORM\Column(nullable: true)]
     #[Groups(['pokemon:lire', 'pokemon:ecrire'])]
+    #[Assert\Positive]
     private ?int $weight = null;
 
     #[ORM\Column]
     #[Groups(['pokemon:lire', 'pokemon:ecrire'])]
+    #[Assert\NotNull]
     private ?bool $originalForm = null;
 
     #[ORM\ManyToOne(inversedBy: 'generation')]
