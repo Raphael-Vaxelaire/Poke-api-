@@ -7,17 +7,23 @@ use App\Repository\GenerationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: GenerationRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['generation:lire']],
+    denormalizationContext: ['groups' => ['generation:ecrire']]
+)]
 class Generation
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['generation:lire'])]
     private ?int $id = null;
 
     #[ORM\Column(unique: true)]
+    #[Groups(['generation:lire', 'generation:ecrire', 'pokemon:lire'])]
     private ?int $number = null;
 
     /**
@@ -25,7 +31,7 @@ class Generation
      */
     #[ORM\OneToMany(targetEntity: Pokemon::class, mappedBy: 'generation')]
     private Collection $generation;
-
+    
     public function __construct()
     {
         $this->generation = new ArrayCollection();
