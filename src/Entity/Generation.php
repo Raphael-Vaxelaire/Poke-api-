@@ -27,7 +27,6 @@ class Generation
     #[Groups(['generation:lire', 'generation:ecrire', 'pokemon:lire'])]
     #[Assert\NotBlank]
     #[Assert\Positive]
-    #[Assert\UniqueEntity]
     private ?int $number = null;
 
     /**
