@@ -46,15 +46,18 @@ class Pokemon
 
     #[ORM\ManyToOne(inversedBy: 'generation')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['pokemon:lire', 'pokemon:ecrire'])]
     private ?Generation $generation = null;
 
     /**
      * @var Collection<int, Type>
      */
     #[ORM\ManyToMany(targetEntity: Type::class, inversedBy: 'type')]
+    #[Groups(['pokemon:lire', 'pokemon:ecrire'])]
     private Collection $type;
 
     #[ORM\Column(unique: true)]
+    #[Groups(['pokemon:lire'])]
     private ?int $pokemonId = null;
 
     public function __construct()

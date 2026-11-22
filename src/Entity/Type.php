@@ -29,6 +29,7 @@ class Type
     #[Assert\NotBlank]
     #[Assert\Length(255)]
     
+    
     private ?string $name = null;
 
     /**
