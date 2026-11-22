@@ -7,17 +7,26 @@ use App\Repository\GenerationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: GenerationRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['generation:lire']],
+    denormalizationContext: ['groups' => ['generation:ecrire']]
+)]
 class Generation
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['generation:lire'])]
     private ?int $id = null;
 
     #[ORM\Column(unique: true)]
+    #[Groups(['generation:lire', 'generation:ecrire', 'pokemon:lire'])]
+    #[Assert\NotBlank]
+    #[Assert\Positive]
     private ?int $number = null;
 
     /**
