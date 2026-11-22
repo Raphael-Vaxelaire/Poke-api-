@@ -28,7 +28,7 @@ class Type
     #[Groups(['type:lire', 'type:ecrire', 'pokemon:lire'])]
     #[Assert\NotBlank]
     #[Assert\Length(255)]
-    #[Assert\UniqueEntity]
+    
     private ?string $name = null;
 
     /**
